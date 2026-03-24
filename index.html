@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FusnChain - PayFi Era Blockchain Infrastructure</title>
+    <meta name="description" content="FusnChain is a public blockchain built for financial execution, bringing real-world financial activities on-chain.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- AOS Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        #particles-js { position: absolute; width: 100%; height: 100%; z-index: 0; }
+        .gradient-text { background: linear-gradient(135deg, #1E6BFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-primary { background: linear-gradient(135deg, #1E6BFF 0%, #0052CC 100%); transition: all 0.3s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(30, 107, 255, 0.4); }
+        .card-hover { transition: all 0.3s; }
+        .card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(30, 107, 255, 0.2); }
+        .glow { box-shadow: 0 0 20px rgba(30, 107, 255, 0.5); }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white overflow-x-hidden" x-data="{ lang: 'zh', showMobileMenu: false }">
+
+<!-- Navigation -->
+<nav class="fixed w-full z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
+    <div class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="https://raw.githubusercontent.com/FusnChain/FusnChain/main/images/FusnChain.logo1.png" alt="FusnChain" class="h-10">
+                <span class="text-2xl font-bold gradient-text">FusnChain</span>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="hover:text-blue-400 transition" x-text="lang === 'zh' ? '关于' : 'About'"></a>
+                <a href="#ecosystem" class="hover:text-blue-400 transition" x-text="lang === 'zh' ? '生态' : 'Ecosystem'"></a>
+                <a href="#tokenomics" class="hover:text-blue-400 transition" x-text="lang === 'zh' ? '代币' : 'Token'"></a>
+                <a href="#partners" class="hover:text-blue-400 transition" x-text="lang === 'zh' ? '合作伙伴' : 'Partners'"></a>
+                <a href="#roadmap" class="hover:text-blue-400 transition" x-text="lang === 'zh' ? '路线图' : 'Roadmap'"></a>
+                <a href="#community" class="hover:text-blue-400 transition" x-text="lang === 'zh' ? '社区' : 'Community'"></a>
+                
+                <!-- Language Toggle -->
+                <button @click="lang = lang === 'zh' ? 'en' : 'zh'" class="px-3 py-1 border border-blue-500 rounded hover:bg-blue-500 transition">
+                    <span x-text="lang === 'zh' ? 'EN' : '中文'"></span>
+                </button>
+                
+                <!-- Add to Wallet -->
+                <button onclick="addToWallet()" class="btn-primary px-6 py-2 rounded-lg font-semibold text-white">
+                    <span x-text="lang === 'zh' ? '添加到钱包' : 'Add to Wallet'"></span>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button @click="showMobileMenu = !showMobileMenu" class="md:hidden text-2xl">
+                <span x-show="!showMobileMenu">☰</span>
+                <span x-show="showMobileMenu">✕</span>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div x-show="showMobileMenu" class="md:hidden mt-4 pb-4 space-y-3">
+            <a href="#about" class="block hover:text-blue-400" x-text="lang === 'zh' ? '关于' : 'About'"></a>
+            <a href="#ecosystem" class="block hover:text-blue-400" x-text="lang === 'zh' ? '生态' : 'Ecosystem'"></a>
+            <a href="#tokenomics" class="block hover:text-blue-400" x-text="lang === 'zh' ? '代币' : 'Token'"></a>
+            <a href="#partners" class="block hover:text-blue-400" x-text="lang === 'zh' ? '合作伙伴' : 'Partners'"></a>
+            <a href="#community" class="block hover:text-blue-400" x-text="lang === 'zh' ? '社区' : 'Community'"></a>
+            <button @click="lang = lang === 'zh' ? 'en' : 'zh'" class="block w-full text-left py-2 px-4 border border-blue-500 rounded">
+                <span x-text="lang === 'zh' ? 'English' : '中文'"></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-bg relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <div id="particles-js"></div>
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <h1 class="text-5xl md:text-7xl font-black mb-6" data-aos="fade-up">
+            <span class="gradient-text" x-text="lang === 'zh' ? 'FusnChain' : 'FusnChain'"></span>
+        </h1>
+        <p class="text-xl md:text-3xl mb-4 text-gray-300" data-aos="fade-up" data-aos-delay="100">
+            <span x-text="lang === 'zh' ? '开启 PayFi 时代的链上金融执行基础设施' : 'PayFi Era On-Chain Financial Execution Infrastructure'"></span>
+        </p>
+        <p class="text-lg md:text-xl mb-12 text-gray-400 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+            <span x-text="lang === 'zh' ? '将真实世界的金融行为全面带入链上，让金融执行更高效、透明、全球化' : 'Bringing real-world financial activities on-chain for efficient, transparent, and global financial execution'"></span>
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16" data-aos="fade-up" data-aos-delay="300">
+            <a href="https://swap.fusn.network/" target="_blank" class="btn-primary px-8 py-4 rounded-lg font-bold text-lg">
+                <span x-text="lang === 'zh' ? '进入 Swap' : 'Enter Swap'"></span>
+            </a>
+            <a href="#whitepaper" class="px-8 py-4 rounded-lg font-bold text-lg border-2 border-blue-500 hover:bg-blue-500/10 transition">
+                <span x-text="lang === 'zh' ? '查看白皮书' : 'Read Whitepaper'"></span>
+            </a>
+        </div>
+        
+        <!-- Stats Bar -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="400">
+            <div class="bg-gray-800/50 backdrop-blur p-4 rounded-lg border border-gray-700">
+                <div class="text-3xl font-bold text-blue-400">8379</div>
+                <div class="text-sm text-gray-400" x-text="lang === 'zh' ? '链 ID' : 'Chain ID'"></div>
+            </div>
+            <div class="bg-gray-800/50 backdrop-blur p-4 rounded-lg border border-gray-700">
+                <div class="text-3xl font-bold text-blue-400">21亿</div>
+                <div class="text-sm text-gray-400" x-text="lang === 'zh' ? '总供应量' : 'Total Supply'"></div>
+            </div>
+            <div class="bg-gray-800/50 backdrop-blur p-4 rounded-lg border border-gray-700">
+                <div class="text-3xl font-bold text-blue-400">90%</div>
+                <div class="text-sm text-gray-400" x-text="lang === 'zh' ? '质押比例' : 'Staking'"></div>
+            </div>
+            <div class="bg-gray-800/50 backdrop-blur p-4 rounded-lg border border-gray-700">
+                <div class="text-3xl font-bold text-blue-400">10%</div>
+                <div class="text-sm text-gray-400" x-text="lang === 'zh' ? '挖矿比例' : 'Mining'"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-20 bg-gray-800/30">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-4" data-aos="fade-up">
+            <span x-text="lang === 'zh' ? '关于 FusnChain' : 'About FusnChain'"></span>
+        </h2>
+        <p class="text-center text-gray-400 mb-16 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+            <span x-text="lang === 'zh' ? 'FusnChain 是一条专为金融执行而生的公链，致力于打通传统金融与 Web3 之间的价值流动与金融交互' : 'FusnChain is a public blockchain built specifically for financial execution, connecting traditional finance and Web3'"></span>
+        </p>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="card-hover bg-gray-800 p-8 rounded-xl border border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-5xl mb-4">⚡</div>
+                <h3 class="text-2xl font-bold mb-3" x-text="lang === 'zh' ? '高效执行' : 'Fast Execution'"></h3>
+                <p class="text-gray-400" x-text="lang === 'zh' ? '高性能区块链架构，实现毫秒级交易确认，满足金融级应用需求' : 'High-performance architecture with millisecond transaction confirmation for financial-grade applications'"></p>
+            </div>
+            
+            <div class="card-hover bg-gray-800 p-8 rounded-xl border border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-5xl mb-4">🌐</div>
+                <h3 class="text-2xl font-bold mb-3" x-text="lang === 'zh' ? '全球化金融' : 'Global Finance'"></h3>
+                <p class="text-gray-400" x-text="lang === 'zh' ? '无国界的金融基础设施，让全球用户都能参与链上金融活动' : 'Borderless financial infrastructure enabling global participation in on-chain finance'"></p>
+            </div>
+            
+            <div class="card-hover bg-gray-800 p-8 rounded-xl border border-gray-700" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-5xl mb-4">🔗</div>
+                <h3 class="text-2xl font-bold mb-3" x-text="lang === 'zh' ? '可组合 DeFi' : 'Composable DeFi'"></h3>
+                <p class="text-gray-400" x-text="lang === 'zh' ? '完整的 DeFi 生态组件，支持灵活组合构建复杂金融产品' : 'Complete DeFi ecosystem components for building complex financial products'"></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Ecosystem Section -->
+
+<!-- Network Info Section -->
+<section id="network" class="py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12" data-aos="fade-up">
+            <span x-text="lang === 'zh' ? '网络参数' : 'Network Parameters'"></span>
+        </h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <div class="card-hover bg-gray-800 p-6 rounded-xl border border-blue-900/50 text-center glow" data-aos="zoom-in" data-aos-delay="0">
+                <div class="text-blue-400 text-4xl font-black mb-2">FusnChain</div>
+                <div class="text-gray-400 text-sm" x-text="lang === 'zh' ? '网络名称' : 'Network Name'"></div>
+            </div>
+            <div class="card-hover bg-gray-800 p-6 rounded-xl border border-blue-900/50 text-center glow" data-aos="zoom-in" data-aos-delay="100">
+                <div class="text-blue-400 text-4xl font-black mb-2">8379</div>
+                <div class="text-gray-400 text-sm">Chain ID</div>
+            </div>
+            <div class="card-hover bg-gray-800 p-6 rounded-xl border border-blue-900/50 text-center" data-aos="zoom-in" data-aos-delay="200">
+                <div class="text-blue-400 font-bold mb-2 break-all text-sm">rpc.fusn.network</div>
+                <div class="text-gray-400 text-sm">RPC URL</div>
+            </div>
+            <div class="card-hover bg-gray-800 p-6 rounded-xl border border-blue-900/50 text-center" data-aos="zoom-in" data-aos-delay="300">
+                <div class="text-blue-400 font-bold mb-2 text-sm break-all">scan.fusn.network</div>
+                <div class="text-gray-400 text-sm" x-text="lang === 'zh' ? '区块浏览器' : 'Block Explorer'"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="ecosystem" class="py-20">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-4" data-aos="fade-up">
+            <span x-text="lang === 'zh' ? 'FusnChain 生态' : 'FusnChain Ecosystem'"></span>
+        </h2>
+        <p class="text-center text-gray-400 mb-16" data-aos="fade-up" data-aos-delay="100">
+            <span x-text="lang === 'zh' ? '完整的链上金融基础设施' : 'Complete on-chain financial infrastructure'"></span>
+        </p>
+        
+        <div id="ecosystem-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Ecosystem items will be generated by JS -->
+        </div>
+    </div>
+</section>
+
+<!-- Tokenomics Section -->
+<section id="tokenomics" class="py-20 bg-gray-800/30">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-4" data-aos="fade-up">
+            <span x-text="lang === 'zh' ? 'FUSN 代币经济' : 'FUSN Tokenomics'"></span>
+        </h2>
+        <p class="text-center text-gray-400 mb-16" data-aos="fade-up" data-aos-delay="100">
+            <span x-text="lang === 'zh' ? '总供应量: 21 亿枚' : 'Total Supply: 2.1 Billion'"></span>
+        </p>
+        
+        <div class="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+            <div data-aos="fade-right">
+                <canvas id="tokenChart"></canvas>
+            </div>
+            
+            <div data-aos="fade-left" class="space-y-6">
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <h3 class="text-xl font-bold mb-2" x-text="lang === 'zh' ? '代币名称' : 'Token Name'"></h3>
+                    <p class="text-gray-400">FUSN (Wrapped FUSN)</p>
+                </div>
+                
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <h3 class="text-xl font-bold mb-2" x-text="lang === 'zh' ? '合约地址' : 'Contract Address'"></h3>
+                    <div class="flex items-center gap-2">
+                        <code class="text-sm text-blue-400 break-all">0x39da1edc75798eab229b7d92593e0a6684645a70</code>
+                        <button onclick="copyAddress()" class="text-blue-400 hover:text-blue-300" title="Copy">📋</button>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <h3 class="text-xl font-bold mb-2" x-text="lang === 'zh' ? '分配比例' : 'Distribution'"></h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400" x-text="lang === 'zh' ? '质押' : 'Staking'"></span>
+                            <span class="text-blue-400 font-bold">90%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400" x-text="lang === 'zh' ? '算力挖矿' : 'Mining'"></span>
+                            <span class="text-green-400 font-bold">10%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="https://ave.ai/token/0x39da1edc75798eab229b7d92593e0a6684645a70-fusnchain" target="_blank" class="block btn-primary px-6 py-3 rounded-lg text-center font-bold">
+                    <span x-text="lang === 'zh' ? '查看实时价格 →' : 'View Live Price →'"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Partners Section -->
+<section id="partners" class="py-20">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-4" data-aos="fade-up">
+            <span x-text="lang === 'zh' ? '合作伙伴' : 'Partners'"></span>
+        </h2>
+        <p class="text-center text-gray-400 mb-16" data-aos="fade-up" data-aos-delay="100">
+            <span x-text="lang === 'zh' ? '共建 PayFi 生态' : 'Building PayFi ecosystem together'"></span>
+        </p>
+        
+        <div id="partners-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
+            <!-- Partners will be generated by JS -->
+        </div>
+    </div>
+</section>
+
+<!-- Whitepaper Section -->
+<section id="whitepaper" class="py-20 bg-gray-800/30">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8" data-aos="fade-up">
+            <span x-text="lang === 'zh' ? '白皮书' : 'Whitepaper'"></span>
+        </h2>
+        
+        <div class="flex flex-col sm:flex-row gap-6 justify-center" data-aos="fade-up" data-aos-delay="100">
+            <a href="https://drive.google.com/file/d/1aV2qOjPBy8MhMs0HTngCJEi7ngi6Avsy/view" target="_blank" class="btn-primary px-8 py-4 rounded-lg font-bold text-lg">
+                📄 <span x-text="lang === 'zh' ? '中文白皮书' : 'Chinese Whitepaper'"></span>
+            </a>
+            <a href="https://drive.google.com/file/d/1GszRXz8cwApzTkC6I7WNAm3Ri8olWF-g/view" target="_blank" class="btn-primary px-8 py-4 rounded-lg font-bold text-lg">
+                📄 <span x-text="lang === 'zh' ? 'English Whitepaper' : 'English Whitepaper'"></span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Community Section -->
+
+<!-- Roadmap Section -->
+<section id="roadmap" class="py-20 bg-gray-800/30">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-16" data-aos="fade-up">
+            <span x-text="lang === 'zh' ? '发展路线图' : 'Roadmap'"></span>
+        </h2>
+        
+        <div class="max-w-3xl mx-auto space-y-8">
+            <div class="flex gap-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center font-bold shrink-0">1</div>
+                    <div class="w-0.5 bg-gray-700 flex-1 mt-2"></div>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 flex-1 mb-4">
+                    <span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded" x-text="lang === 'zh' ? '已完成' : 'Completed'"></span>
+                    <h3 class="text-xl font-bold mt-2 mb-2" x-text="lang === 'zh' ? 'Phase 1 — 主网上线' : 'Phase 1 — Mainnet Launch'"></h3>
+                    <p class="text-gray-400" x-text="lang === 'zh' ? '公链主网部署，区块浏览器上线，基础 DeFi 生态启动' : 'Mainnet deployment, block explorer launch, core DeFi ecosystem bootstrap'"></p>
+                </div>
+            </div>
+            
+            <div class="flex gap-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center font-bold shrink-0">2</div>
+                    <div class="w-0.5 bg-gray-700 flex-1 mt-2"></div>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 flex-1 mb-4">
+                    <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded" x-text="lang === 'zh' ? '进行中' : 'In Progress'"></span>
+                    <h3 class="text-xl font-bold mt-2 mb-2" x-text="lang === 'zh' ? 'Phase 2 — 生态扩展' : 'Phase 2 — Ecosystem Expansion'"></h3>
+                    <p class="text-gray-400" x-text="lang === 'zh' ? 'FusnSwap 交易所上线，跨链桥接，更多生态协议接入' : 'FusnSwap launch, cross-chain bridge, more protocol integrations'"></p>
+                </div>
+            </div>
+            
+            <div class="flex gap-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center font-bold shrink-0">3</div>
+                    <div class="w-0.5 bg-gray-700 flex-1 mt-2"></div>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 flex-1 mb-4">
+                    <span class="text-xs bg-gray-500/20 text-gray-400 px-2 py-1 rounded" x-text="lang === 'zh' ? '即将到来' : 'Upcoming'"></span>
+                    <h3 class="text-xl font-bold mt-2 mb-2" x-text="lang === 'zh' ? 'Phase 3 — PayFi 协议' : 'Phase 3 — PayFi Protocol'"></h3>
+                    <p class="text-gray-400" x-text="lang === 'zh' ? '真实世界金融资产上链，支付协议集成，机构合作' : 'Real-world asset tokenization, payment protocol integration, institutional partnerships'"></p>
+                </div>
+            </div>
+            
+            <div class="flex gap-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center font-bold shrink-0">4</div>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 flex-1">
+                    <span class="text-xs bg-gray-500/20 text-gray-400 px-2 py-1 rounded" x-text="lang === 'zh' ? '规划中' : 'Planned'"></span>
+                    <h3 class="text-xl font-bold mt-2 mb-2" x-text="lang === 'zh' ? 'Phase 4 — 全球金融基础设施' : 'Phase 4 — Global Finance Infrastructure'"></h3>
+                    <p class="text-gray-400" x-text="lang === 'zh' ? '多链互操作，全球合规框架，成为 PayFi 时代核心基础设施' : 'Multi-chain interoperability, global compliance framework, becoming core PayFi infrastructure'"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="community" class="py-20">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-16" data-aos="fade-up">
+            <span x-text="lang === 'zh' ? '加入社区' : 'Join Community'"></span>
+        </h2>
+        
+        <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <a href="https://x.com/fusnchain/" target="_blank" class="card-hover bg-gray-800 p-8 rounded-xl border border-gray-700 text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-5xl mb-4">𝕏</div>
+                <h3 class="text-2xl font-bold mb-2">Twitter</h3>
+                <p class="text-gray-400" x-text="lang === 'zh' ? '关注最新动态' : 'Follow for updates'"></p>
+            </a>
+            
+            <a href="https://t.me/FusnChain" target="_blank" class="card-hover bg-gray-800 p-8 rounded-xl border border-gray-700 text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-5xl mb-4">✈️</div>
+                <h3 class="text-2xl font-bold mb-2">Telegram</h3>
+                <p class="text-gray-400" x-text="lang === 'zh' ? '加入社区讨论' : 'Join community'"></p>
+            </a>
+            
+            <a href="https://medium.com/@media_1168" target="_blank" class="card-hover bg-gray-800 p-8 rounded-xl border border-gray-700 text-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-5xl mb-4">📝</div>
+                <h3 class="text-2xl font-bold mb-2">Medium</h3>
+                <p class="text-gray-400" x-text="lang === 'zh' ? '阅读深度文章' : 'Read articles'"></p>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-800/50 border-t border-gray-700 py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+                <h4 class="font-bold text-lg mb-4" x-text="lang === 'zh' ? '快速链接' : 'Quick Links'"></h4>
+                <div class="space-y-2">
+                    <a href="https://www.fusn.network/" class="block text-gray-400 hover:text-blue-400" x-text="lang === 'zh' ? '官网' : 'Website'"></a>
+                    <a href="https://swap.fusn.network/" class="block text-gray-400 hover:text-blue-400">Swap</a>
+                    <a href="https://www.fusnbridge.com/" class="block text-gray-400 hover:text-blue-400">Bridge</a>
+                    <a href="https://scan.fusn.network/" class="block text-gray-400 hover:text-blue-400" x-text="lang === 'zh' ? '区块浏览器' : 'Explorer'"></a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-lg mb-4" x-text="lang === 'zh' ? '开发者' : 'Developers'"></h4>
+                <div class="space-y-2">
+                    <a href="https://scan.fusn.network/api-docs" class="block text-gray-400 hover:text-blue-400">API Docs</a>
+                    <a href="#whitepaper" class="block text-gray-400 hover:text-blue-400" x-text="lang === 'zh' ? '白皮书' : 'Whitepaper'"></a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-lg mb-4" x-text="lang === 'zh' ? '网络信息' : 'Network Info'"></h4>
+                <div class="space-y-2 text-sm">
+                    <p class="text-gray-400"><span x-text="lang === 'zh' ? '网络名称' : 'Network'"></span>: FusnChain</p>
+                    <p class="text-gray-400"><span x-text="lang === 'zh' ? '链 ID' : 'Chain ID'"></span>: 8379</p>
+                    <p class="text-gray-400">RPC: <a href="https://rpc.fusn.network/" class="text-blue-400 hover:text-blue-300">rpc.fusn.network</a></p>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-lg mb-4" x-text="lang === 'zh' ? '社区' : 'Community'"></h4>
+                <div class="space-y-2">
+                    <a href="https://x.com/fusnchain/" class="block text-gray-400 hover:text-blue-400">Twitter</a>
+                    <a href="https://t.me/FusnChain" class="block text-gray-400 hover:text-blue-400">Telegram</a>
+                    <a href="https://medium.com/@media_1168" class="block text-gray-400 hover:text-blue-400">Medium</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+            <p class="mb-2" x-text="lang === 'zh' ? '合约地址: 0x39da1edc75798eab229b7d92593e0a6684645a70' : 'Contract: 0x39da1edc75798eab229b7d92593e0a6684645a70'"></p>
+            <p>&copy; 2024-2026 FusnChain. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
