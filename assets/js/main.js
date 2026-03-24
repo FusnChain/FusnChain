@@ -33,7 +33,7 @@ const partners = [
   },
   {
     name: "Bitget Wallet",
-    logo: "https://raw.githubusercontent.com/bitgetwallet/download/main/logo/png/Bitget%20Wallet-Logo.png",
+    logo: "https://raw.githubusercontent.com/bitgetwallet/download/main/logo/png/Bitget%20Wallet-Logo-White.png",
     url: "https://web3.bitget.com/"
   },
   // ---- Add more partners below ----
