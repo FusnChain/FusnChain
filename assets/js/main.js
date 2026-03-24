@@ -31,6 +31,11 @@ const partners = [
     logo: "https://raw.githubusercontent.com/FusnChain/FusnChain/main/images/DrixWellt.png",
     url: "#"
   },
+  {
+    name: "Bitget Wallet",
+    logo: "https://raw.githubusercontent.com/bitgetwallet/download/main/logo/png/Bitget%20Wallet-Logo.png",
+    url: "https://web3.bitget.com/"
+  },
   // ---- Add more partners below ----
   // {
   //   name: "Partner Name",
